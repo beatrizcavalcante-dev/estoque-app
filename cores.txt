@@ -1,0 +1,15 @@
+Variável           | Cor      | Uso
+------------------ | -------- | -------------------------
+--bg-primary       | #0F0F0F | Fundo principal
+--bg-surface       | #1A1A1A | Cards, sidebar
+--bg-elevated      | #242424 | Hover, inputs
+--accent-primary   | #8B0000 | Botões, destaques
+--accent-hover     | #A50000 | Hover dos botões
+--accent-soft      | #3D0000 | Fundo de badges
+--text-primary     | #F0F0F0 | Texto principal
+--text-secondary   | #9A9A9A | Texto auxiliar
+--text-muted       | #555555 | Placeholders
+--border           | #2A2A2A | Bordas sutis
+--success          | #1DB954 | Entrada de estoque
+--warning          | #F59E0B | Alerta estoque baixo
+--danger           | #EF4444 | Saída erro

@@ -1,0 +1,152 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  /* Fundos */
+  --bg-primary: #0F0F0F;
+  --bg-surface: #1A1A1A;
+  --bg-elevated: #242424;
+
+  /* Identidade */
+  --accent-primary: #8B0000;
+  --accent-hover: #A50000;
+  --accent-soft: #3D0000;
+
+  /* Textos */
+  --text-primary: #F0F0F0;
+  --text-secondary: #9A9A9A;
+  --text-muted: #555555;
+
+  /* Estrutura */
+  --border: #2A2A2A;
+  --radius: 8px;       
+  --radius-lg: 12px;
+
+  /* Semânticas */
+  --success: #1DB954;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  /* Tipografia */
+  --font-main: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* texto mais nítido em Mac/Chrome */
+  display: flex; 
+  min-height: 100vh; 
+}
+
+#sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column; /* empilha logo + nav verticalmente */
+  gap: 32px; /* espaço entre colunas */
+  position: fixed; /* sidebar fica fixa ao rolar a página */
+  top: 0;
+  left: 0;
+}
+
+#main-content {
+  margin-left: 220px; /* empurra o conteúdo para não ficar atrás da sidebar */
+  flex: 1;
+  padding: 32px;
+  background-color: var(--bg-primary);
+}
+
+/* ====LOGO==== */
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  letter-spacing: 0.03em;
+}
+
+/* ====MENU DE NAVEGAÇÃO==== */
+
+.nav-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  text-decoration: none; /* remove sublinhado do link */
+  font-size: 14px;
+  margin-bottom: 4px;
+  transition: all 0.2s; 
+}
+
+.nav-item:hover {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background-color: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+/* ====CABEÇALHO DA PÁGINA==== */
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ====CARDS DE MÉTRICAS==== */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colunas iguais */
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* label em cima, número embaixo */
+  gap: 10px;
+}
+
+.metric-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.metric-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* cores semânticas no número */
+.metric-value.success { color: var(--success); }
+.metric-value.warning { color: var(--warning); }
+.metric-value.danger  { color: var(--danger);  }
