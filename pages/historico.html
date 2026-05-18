@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico — EstoqueApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+</head>
+
+<body>
+
+    <aside id="sidebar">
+        <div class="logo">EstoqueApp</div>
+        <nav>
+            <a href="../index.html" class="nav-item">Dashboard</a>
+            <a href="produtos.html" class="nav-item">Produtos</a>
+            <a href="movimentacoes.html" class="nav-item">Movimentações</a>
+            <a href="historico.html" class="nav-item active">Histórico</a>
+        </nav>
+    </aside>
+
+    <main id="main-content">
+
+        <header class="page-header">
+            <h1>Histórico</h1>
+            <p>Todas as movimentações registradas</p>
+        </header>
+
+    <!-- FILTROS -->
+        <section class="filtros-section">
+            <button class="btn-filtro active" data-filtro="todos">Todos</button>
+            <button class="btn-filtro" data-filtro="entrada">Entradas</button>
+            <button class="btn-filtro" data-filtro="saida">Saídas</button>
+        </section>
+
+    <!-- TABELA -->
+        <section class="table-section" style="margin-top: 16px;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Observação</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+            <tbody id="tabela-historico"></tbody>
+            </table>
+
+      <!-- mensagem quando não há registros -->
+            <div id="msg-vazio" style="display:none;">
+                <p>Nenhuma movimentação encontrada.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/historico.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movimentações — EstoqueApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+</head>
+
+<body>
+
+    <aside id="sidebar">
+        <div class="logo">EstoqueApp</div>
+        <nav>
+        <a href="../index.html" class="nav-item">Dashboard</a>
+        <a href="produtos.html" class="nav-item">Produtos</a>
+        <a href="movimentacoes.html" class="nav-item active">Movimentações</a>
+        <a href="historico.html" class="nav-item">Histórico</a>
+        </nav>
+    </aside>
+
+    <main id="main-content">
+
+    <header class="page-header">
+        <h1>Movimentações</h1>
+        <p>Registre entradas e saídas do estoque</p>
+    </header>
+
+    <!-- FORMULÁRIO -->
+    <section class="form-section">
+        <div class="section-header">
+            <h2>Nova Movimentação</h2>
+        </div>
+
+        <form id="form-movimentacao">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="produto-select">Produto</label>
+                <select id="produto-select">
+                <option value="">Selecione o produto...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select id="tipo">
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="qtd-mov">Quantidade</label>
+                <input type="number" id="qtd-mov" placeholder="0" min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="observacao">Observação (opcional)</label>
+                <input type="text" id="observacao" placeholder="Ex: Compra mensal">
+            </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Registrar Movimentação</button>
+
+      </form>
+    </section>
+
+    <!-- HISTÓRICO RECENTE -->
+    <section class="table-section" style="margin-top: 24px;">
+        <div class="section-header">
+            <h2>Movimentações Recentes</h2>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Tipo</th>
+                    <th>Quantidade</th>
+                    <th>Observação</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-movimentacoes"></tbody>
+        </table>
+    </section>
+
+  </main>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/movimentacoes.js"></script>
+
+</body>
+</html>

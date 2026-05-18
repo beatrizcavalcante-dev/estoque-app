@@ -8,12 +8,7 @@ const produtos = produtosSalvos ? JSON.parse(produtosSalvos) : [
   { nome: "Papel Sulfite",  quantidade: 2,   categoria: "Papelaria",    estoque_minimo: 20 },
 ]
 
-const movimentacoes = JSON.parse(localStorage.getItem("movimentacoes")) || [
-  { tipo: "entrada", quantidade: 20 },
-  { tipo: "entrada", quantidade: 10 },
-  { tipo: "saida",   quantidade: 5  },
-  { tipo: "saida",   quantidade: 3  },
-]
+const movimentacoes = JSON.parse(localStorage.getItem("movimentacoes")) || []
 
 // ================================
 // SALVA os dados no localStorage
