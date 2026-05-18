@@ -69,23 +69,34 @@ body {
 /* ====LOGO==== */
 
 .logo {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--accent-primary);
-  letter-spacing: 0.03em;
+  padding: 8px 4px;
+}
+
+.logo img {
+  width: 170px;
+  display: block;
+  margin: 0 auto;  
 }
 
 /* ====MENU DE NAVEGAÇÃO==== */
 
 .nav-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 12px;
   border-radius: var(--radius);
   color: var(--text-secondary);
-  text-decoration: none; /* remove sublinhado do link */
+  text-decoration: none;
   font-size: 14px;
   margin-bottom: 4px;
-  transition: all 0.2s; 
+  transition: all 0.2s;
+}
+
+.nav-item i {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .nav-item:hover {
@@ -367,4 +378,103 @@ body {
 
 .btn-excluir:hover {
   background: #2e0606;
+}
+
+.btn-editar {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-editar:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* ================================
+   RESPONSIVIDADE MOBILE
+================================ */
+
+/* Botão para abrir/fechar sidebar no mobile */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+
+  /* esconde sidebar por padrão no mobile */
+  #sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 998;
+  }
+
+  /* mostra sidebar quando tem a classe .open */
+  #sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* conteúdo ocupa a tela toda */
+  #main-content {
+    margin-left: 0;
+    padding: 70px 16px 24px;
+  }
+
+  /* cards em 2 colunas no mobile */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* formulário em coluna única */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* botão de menu aparece */
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* busca ocupa largura toda */
+  .search-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .search-header input {
+    width: 100%;
+  }
+
+  /* tabela com scroll horizontal no mobile */
+  .table-section {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-section .data-table {
+    min-width: 600px;
+  }
+
+  .data-table {
+    min-width: 600px; /* força largura mínima para não comprimir */
+  }
 }

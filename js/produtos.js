@@ -1,4 +1,5 @@
-const form = document.getElementById("form-produto")
+const form      = document.getElementById("form-produto")
+const btnSubmit = document.getElementById("btn-submit")
 
 // ================================
 // RENDERIZA tabela com filtro opcional
@@ -7,7 +8,6 @@ function renderizarTabela(filtro = "") {
   const tbody = document.getElementById("tabela-produtos")
   tbody.innerHTML = ""
 
-  // filtra produtos pelo nome se houver texto na busca
   const lista = filtro
     ? produtos.filter(p =>
         p.nome.toLowerCase().includes(filtro.toLowerCase())
@@ -17,7 +17,7 @@ function renderizarTabela(filtro = "") {
   if (lista.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" style="text-align:center; color: var(--text-muted); padding: 24px;">
+        <td colspan="6" style="text-align:center; color: var(--text-muted); padding: 24px;">
           Nenhum produto encontrado.
         </td>
       </tr>
@@ -35,6 +35,8 @@ function renderizarTabela(filtro = "") {
       badge = '<span class="badge ok">Em estoque</span>'
     }
 
+    const index = produtos.indexOf(produto)
+
     tbody.innerHTML += `
       <tr>
         <td>${produto.nome}</td>
@@ -42,10 +44,9 @@ function renderizarTabela(filtro = "") {
         <td>${produto.quantidade}</td>
         <td>${produto.estoque_minimo}</td>
         <td>${badge}</td>
-        <td>
-          <button class="btn-excluir" data-index="${produtos.indexOf(produto)}">
-            Excluir
-          </button>
+        <td style="display:flex; gap:8px;">
+          <button class="btn-editar"  data-index="${index}">Editar</button>
+          <button class="btn-excluir" data-index="${index}">Excluir</button>
         </td>
       </tr>
     `
@@ -55,54 +56,82 @@ function renderizarTabela(filtro = "") {
 // ================================
 // BUSCA EM TEMPO REAL
 // ================================
-const campoBusca = document.getElementById("busca")
-
-campoBusca.addEventListener("input", function() {
+document.getElementById("busca").addEventListener("input", function() {
   renderizarTabela(this.value)
 })
 
 // ================================
-// CADASTRO DE PRODUTO
+// CLIQUES NA TABELA (editar e excluir)
+// ================================
+document.addEventListener("click", function(evento) {
+
+  // EXCLUIR
+  if (evento.target.classList.contains("btn-excluir")) {
+    const index = Number(evento.target.dataset.index)
+    const nome  = produtos[index].nome
+
+    if (!confirm(`Deseja excluir "${nome}"?`)) return
+
+    produtos.splice(index, 1)
+    salvarDados()
+    renderizarTabela()
+    return
+  }
+
+  // EDITAR — preenche o formulário com os dados do produto
+  if (evento.target.classList.contains("btn-editar")) {
+    const index   = Number(evento.target.dataset.index)
+    const produto = produtos[index]
+
+    document.getElementById("nome").value            = produto.nome
+    document.getElementById("categoria").value       = produto.categoria
+    document.getElementById("quantidade").value      = produto.quantidade
+    document.getElementById("estoque-minimo").value  = produto.estoque_minimo
+    document.getElementById("edit-index").value      = index
+
+    // muda o texto do botão para deixar claro que é edição
+    btnSubmit.textContent = "Salvar Alterações"
+
+    // rola a página até o formulário
+    form.scrollIntoView({ behavior: "smooth" })
+  }
+})
+
+// ================================
+// SUBMIT — cadastro ou edição
 // ================================
 form.addEventListener("submit", function(evento) {
   evento.preventDefault()
 
-  const nome        = document.getElementById("nome").value.trim()
-  const categoria   = document.getElementById("categoria").value
-  const quantidade  = Number(document.getElementById("quantidade").value)
+  const nome          = document.getElementById("nome").value.trim()
+  const categoria     = document.getElementById("categoria").value
+  const quantidade    = Number(document.getElementById("quantidade").value)
   const estoqueMinimo = Number(document.getElementById("estoque-minimo").value)
+  const editIndex     = Number(document.getElementById("edit-index").value)
 
   if (!nome || !categoria) {
     alert("Preencha o nome e a categoria do produto.")
     return
   }
 
-  produtos.push({ nome, categoria, quantidade, estoque_minimo: estoqueMinimo })
+  if (editIndex === -1) {
+    // CADASTRO NOVO
+    produtos.push({ nome, categoria, quantidade, estoque_minimo: estoqueMinimo })
+    alert(`Produto "${nome}" cadastrado com sucesso!`)
+  } else {
+    // EDIÇÃO
+    produtos[editIndex] = { nome, categoria, quantidade, estoque_minimo: estoqueMinimo }
+    alert(`Produto "${nome}" atualizado com sucesso!`)
+
+    // reseta o índice e o botão
+    document.getElementById("edit-index").value = -1
+    btnSubmit.textContent = "Cadastrar Produto"
+  }
+
   salvarDados()
   form.reset()
   renderizarTabela()
-  alert(`Produto "${nome}" cadastrado com sucesso!`)
 })
 
-// ================================
-// DELETAR PRODUTO
-// ================================
-document.addEventListener("click", function(evento) {
-
-  // verifica se o clique foi num botão de excluir
-  if (!evento.target.classList.contains("btn-excluir")) return
-
-  const index = Number(evento.target.dataset.index)
-  const nome  = produtos[index].nome
-
-  // pede confirmação antes de deletar
-  const confirmado = confirm(`Deseja excluir "${nome}"?`)
-  if (!confirmado) return
-
-  // remove o produto do array pelo index
-  produtos.splice(index, 1)
-  salvarDados()
-  renderizarTabela()
-})
 
 renderizarTabela()

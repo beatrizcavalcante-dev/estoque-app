@@ -8,17 +8,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/global.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
+    <button class="menu-toggle" id="menu-toggle">
+        <i data-lucide="menu"></i>
+    </button>
 
     <aside id="sidebar">
-        <div class="logo">EstoqueApp</div>
+        <div class="logo">
+            <img src="../assets/stoque.png" alt="Stock Logo">
+        </div>
+
         <nav>
-        <a href="../index.html" class="nav-item">Dashboard</a>
-        <a href="produtos.html" class="nav-item">Produtos</a>
-        <a href="movimentacoes.html" class="nav-item active">Movimentações</a>
-        <a href="historico.html" class="nav-item">Histórico</a>
+            <a href="../index.html" class="nav-item">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+            <a href="produtos.html" class="nav-item">
+                <i data-lucide="package"></i>
+                Produtos
+            </a>
+            <a href="movimentacoes.html" class="nav-item">
+                <i data-lucide="arrow-left-right"></i>
+                Movimentações
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i data-lucide="clock"></i>
+                Histórico
+            </a>
         </nav>
     </aside>
 
@@ -94,6 +113,7 @@
 
   <script src="../js/app.js"></script>
   <script src="../js/movimentacoes.js"></script>
+  <script>lucide.createIcons()</script>
 
 </body>
 </html>

@@ -88,3 +88,24 @@ function renderizarTabela() {
 // verifica qual página está aberta antes de chamar
 if (document.getElementById("total-produtos")) atualizarMetrics()
 if (document.getElementById("tabela-produtos")) renderizarTabela()
+
+// ================================
+// MENU MOBILE
+// ================================
+const menuToggle = document.getElementById("menu-toggle")
+const sidebar    = document.getElementById("sidebar")
+
+if (menuToggle) {
+  menuToggle.addEventListener("click", function() {
+    sidebar.classList.toggle("open")
+  })
+
+  // fecha sidebar ao clicar fora
+  document.addEventListener("click", function(evento) {
+    const clicouFora = !sidebar.contains(evento.target) &&
+                       !menuToggle.contains(evento.target)
+    if (clicouFora && sidebar.classList.contains("open")) {
+      sidebar.classList.remove("open")
+    }
+  })
+}
