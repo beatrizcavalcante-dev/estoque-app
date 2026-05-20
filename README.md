@@ -4,7 +4,7 @@ Sistema web de controle de estoque com design moderno, desenvolvido com HTML, CS
 
 ## 🔗 Acesse o projeto
 
-> Em breve disponível online
+> [Acesse Aqui](https://beatrizcavalcante-dev.github.io/estoque-app/)
 
 ## 🛠 Tecnologias utilizadas
 
