@@ -16,7 +16,8 @@
     
     <aside id="sidebar">
         <div class="logo">
-            <img src="../assets/stoque.png" alt="Stock Logo">
+            <div class="logo-text"><span>S</span>tock</div>
+            <div class="logo-sub">sistema de estoque</div>
         </div>
 
         <nav>
@@ -37,6 +38,20 @@
                 Histórico
             </a>
         </nav>
+        
+        <div class="sidebar-footer">
+            <p class="sidebar-contact">entre em contato</p>
+
+            <div class="sidebar-links">
+                <a href="https://www.linkedin.com/in/beatrizcavalcantee/" target="_blank" class="social-btn" title="LinkedIn">
+                    <i data-lucide="briefcase"></i>
+                </a>
+
+                <a href="https://api.whatsapp.com/send/?phone=5511966049189" target="_blank" class="social-btn" title="WhatsApp">
+                    <i data-lucide="message-circle"></i>
+                </a>
+            </div>
+        </div>
     </aside>
 
     <main id="main-content">
@@ -88,6 +103,7 @@
                 <button type="submit" class="btn-primary" id="btn-submit">Cadastrar Produto</button>
             </form>
         </section>
+
         <!-- TABELA DE PRODUTOS -->
         <section class="table-section" style="margin-top: 24px;">
             <div class="section-header search-header">
@@ -110,6 +126,10 @@
                 <tbody id="tabela-produtos"></tbody>
             </table>
         </section>
+
+        <footer class="footer">
+            <p>Dev. <span>Beatriz Cavalcante</span></p>
+        </footer>
     </main>
 
     <script src="../js/app.js"></script>

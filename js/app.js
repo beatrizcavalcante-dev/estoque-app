@@ -1,46 +1,46 @@
-const produtosSalvos = localStorage.getItem("produtos")
-
-const produtos = produtosSalvos ? JSON.parse(produtosSalvos) : [
-  { nome: "Caneta Azul",    quantidade: 50,  categoria: "Papelaria",    estoque_minimo: 10 },
-  { nome: "Caderno A4",     quantidade: 8,   categoria: "Papelaria",    estoque_minimo: 10 },
-  { nome: "Mouse USB",      quantidade: 3,   categoria: "Informática",  estoque_minimo: 5  },
-  { nome: "Teclado ABNT",   quantidade: 15,  categoria: "Informática",  estoque_minimo: 5  },
-  { nome: "Papel Sulfite",  quantidade: 2,   categoria: "Papelaria",    estoque_minimo: 20 },
-]
-
-const movimentacoes = JSON.parse(localStorage.getItem("movimentacoes")) || []
+// ================================
+// URL BASE DA API
+// ================================
+const API = "http://localhost:3000"
 
 // ================================
-// SALVA os dados no localStorage
+// BUSCAR PRODUTOS DA API
 // ================================
-function salvarDados() {
-  localStorage.setItem("produtos", JSON.stringify(produtos))
-  localStorage.setItem("movimentacoes", JSON.stringify(movimentacoes))
+async function carregarProdutos() {
+  const resposta = await fetch(`${API}/produtos`)
+  const produtos = await resposta.json()
+  return produtos
 }
 
 // ================================
-// FUNÇÃO — atualiza os cards do dashboard
+// BUSCAR MOVIMENTAÇÕES DA API
 // ================================
-function atualizarMetrics() {
+async function carregarMovimentacoes() {
+  const resposta = await fetch(`${API}/movimentacoes`)
+  const movimentacoes = await resposta.json()
+  return movimentacoes
+}
 
-  // conta quantos produtos existem
+// ================================
+// MÉTRICAS DO DASHBOARD
+// ================================
+async function atualizarMetrics() {
+  const produtos       = await carregarProdutos()
+  const movimentacoes  = await carregarMovimentacoes()
+
   const totalProdutos = produtos.length
 
-  // soma todas as entradas
   const totalEntradas = movimentacoes
-    .filter(m => m.tipo === "entrada")   // pega só as entradas
-    .reduce((soma, m) => soma + m.quantidade, 0) // soma as quantidades
+    .filter(m => m.tipo === "entrada")
+    .reduce((soma, m) => soma + m.quantidade, 0)
 
-  // soma todas as saídas
   const totalSaidas = movimentacoes
     .filter(m => m.tipo === "saida")
     .reduce((soma, m) => soma + m.quantidade, 0)
 
-  // conta produtos abaixo do estoque mínimo
   const totalAlertas = produtos
     .filter(p => p.quantidade < p.estoque_minimo).length
 
-  // atualiza o HTML com os valores calculados
   document.getElementById("total-produtos").textContent = totalProdutos
   document.getElementById("total-entradas").textContent = totalEntradas
   document.getElementById("total-saidas").textContent   = totalSaidas
@@ -48,18 +48,17 @@ function atualizarMetrics() {
 }
 
 // ================================
-// FUNÇÃO — renderiza a tabela de produtos
+// TABELA DO DASHBOARD
 // ================================
-function renderizarTabela() {
-  const tbody = document.getElementById("tabela-produtos")
+async function renderizarTabela() {
+  const produtos = await carregarProdutos()
+  const tbody    = document.getElementById("tabela-produtos")
 
-  // limpa o conteúdo anterior
+  if (!tbody) return
+
   tbody.innerHTML = ""
 
-  // percorre cada produto e cria uma linha na tabela
   produtos.forEach(produto => {
-
-    // define o status com base na quantidade
     let badge = ""
     if (produto.quantidade === 0) {
       badge = '<span class="badge critico">Sem estoque</span>'
@@ -69,8 +68,7 @@ function renderizarTabela() {
       badge = '<span class="badge ok">Em estoque</span>'
     }
 
-    // cria a linha HTML
-    const linha = `
+    tbody.innerHTML += `
       <tr>
         <td>${produto.nome}</td>
         <td>${produto.categoria}</td>
@@ -78,16 +76,8 @@ function renderizarTabela() {
         <td>${badge}</td>
       </tr>
     `
-
-    // insere a linha no tbody
-    tbody.innerHTML += linha
   })
 }
-
-// chama ao carregar a página
-// verifica qual página está aberta antes de chamar
-if (document.getElementById("total-produtos")) atualizarMetrics()
-if (document.getElementById("tabela-produtos")) renderizarTabela()
 
 // ================================
 // MENU MOBILE
@@ -100,7 +90,6 @@ if (menuToggle) {
     sidebar.classList.toggle("open")
   })
 
-  // fecha sidebar ao clicar fora
   document.addEventListener("click", function(evento) {
     const clicouFora = !sidebar.contains(evento.target) &&
                        !menuToggle.contains(evento.target)
@@ -109,3 +98,9 @@ if (menuToggle) {
     }
   })
 }
+
+// ================================
+// INICIALIZA O DASHBOARD
+// ================================
+if (document.getElementById("total-produtos")) atualizarMetrics()
+if (document.getElementById("tabela-produtos")) renderizarTabela()

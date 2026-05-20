@@ -16,29 +16,44 @@
 
     <aside id="sidebar">
         <div class="logo">
-            <img src="assets/stoque.png" alt="Stock Logo">
+            <div class="logo-text"><span>S</span>tock</div>
+            <div class="logo-sub">sistema de estoque</div>
         </div>
 
         <nav>
             <a href="index.html" class="nav-item active">
-            <i data-lucide="layout-dashboard"></i>
-            Dashboard
-        </a>
-        <a href="pages/produtos.html" class="nav-item">
-            <i data-lucide="package"></i>
-            Produtos
-        </a>
-        <a href="pages/movimentacoes.html" class="nav-item">
-            <i data-lucide="arrow-left-right"></i>
-            Movimentações
-        </a>
-        <a href="pages/historico.html" class="nav-item">
-            <i data-lucide="clock"></i>
-            Histórico
-        </a>
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+            <a href="pages/produtos.html" class="nav-item">
+                <i data-lucide="package"></i>
+                Produtos
+            </a>
+            <a href="pages/movimentacoes.html" class="nav-item">
+                <i data-lucide="arrow-left-right"></i>
+                Movimentações
+            </a>
+            <a href="pages/historico.html" class="nav-item">
+                <i data-lucide="clock"></i>
+                Histórico
+            </a>
         </nav>
+
+        <div class="sidebar-footer">
+            <p class="sidebar-contact">entre em contato</p>
+
+            <div class="sidebar-links">
+                <a href="https://www.linkedin.com/in/beatrizcavalcantee/" target="_blank" class="social-btn" title="LinkedIn">
+                    <i data-lucide="briefcase"></i>
+                </a>
+
+                <a href="https://api.whatsapp.com/send/?phone=5511966049189" target="_blank" class="social-btn" title="WhatsApp">
+                    <i data-lucide="message-circle"></i>
+                </a>
+            </div>
+        </div>
     </aside>
-    
+     
     <main id="main-content">
 
         <header class="page-header">
@@ -47,49 +62,53 @@
         </header>
 
     
-        <!-- CARDS DE MÉTRICAS -->
-    <section class="metrics-grid">
+        <!-- CARDS MÉTRICAS -->
+        <section class="metrics-grid">
 
-        <div class="metric-card">
-            <span class="metric-label">Total de Produtos</span>
-            <span class="metric-value" id="total-produtos">0</span>
-        </div>
+            <div class="metric-card card-total">
+                <span class="metric-label">Total de Produtos</span>
+                <span class="metric-value" id="total-produtos">0</span>
+            </div>
 
-        <div class="metric-card">
-            <span class="metric-label">Entradas do Mês</span>
-            <span class="metric-value success" id="total-entradas">0</span>
-        </div>
+            <div class="metric-card card-entrada">
+                <span class="metric-label">Entradas do Mês</span>
+                <span class="metric-value success" id="total-entradas">0</span>
+            </div>
 
-        <div class="metric-card">
-            <span class="metric-label">Saídas do Mês</span>
-            <span class="metric-value danger" id="total-saidas">0</span>
-        </div>
+            <div class="metric-card card-saida">
+                <span class="metric-label">Saídas do Mês</span>
+                <span class="metric-value danger" id="total-saidas">0</span>
+            </div>
 
-        <div class="metric-card">
-            <span class="metric-label">Alertas de Estoque</span>
-            <span class="metric-value warning" id="total-alertas">0</span>
-        </div>
-    </section>
+            <div class="metric-card card-alerta">
+                <span class="metric-label">Alertas de Estoque</span>
+                <span class="metric-value warning" id="total-alertas">0</span>
+            </div>
+        </section>
 
-    <!-- TABELA DE PRODUTOS -->
-    <section class="table-section">
+        <!-- TABELA PRODUTOS -->
+        <section class="table-section">
 
-        <div class="section-header">
-            <h2>Produtos</h2>
-        </div>
+            <div class="section-header">
+                <h2>Produtos</h2>
+            </div>
 
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Quantidade</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-produtos"></tbody>
-        </table>
-    </section>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Quantidade</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-produtos"></tbody>
+            </table>
+        </section>
+
+        <footer class="footer">
+            <p>Dev. <span>Beatriz Cavalcante</span></p>
+        </footer>
     </main>
 
     <script>lucide.createIcons()</script>

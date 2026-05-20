@@ -1,18 +1,19 @@
 // ================================
-// RENDERIZA o histórico filtrado
+// RENDERIZA HISTÓRICO FILTRADO
 // ================================
-function renderizarHistorico(filtro = "todos") {
-  const tbody = document.getElementById("tabela-historico")
+async function renderizarHistorico(filtro = "todos") {
+  const resposta      = await fetch(`${API}/movimentacoes`)
+  const movimentacoes = await resposta.json()
+
+  const tbody    = document.getElementById("tabela-historico")
   const msgVazio = document.getElementById("msg-vazio")
 
   tbody.innerHTML = ""
 
-  // filtra conforme o botão clicado
   const lista = filtro === "todos"
-    ? [...movimentacoes].reverse()
-    : [...movimentacoes].filter(m => m.tipo === filtro).reverse()
+    ? movimentacoes
+    : movimentacoes.filter(m => m.tipo === filtro)
 
-  // exibe mensagem se não houver registros
   if (lista.length === 0) {
     msgVazio.style.display = "block"
     return
@@ -38,24 +39,17 @@ function renderizarHistorico(filtro = "todos") {
 }
 
 // ================================
-// LÓGICA DOS BOTÕES DE FILTRO
+// BOTÕES DE FILTRO
 // ================================
 const botoes = document.querySelectorAll(".btn-filtro")
 
 botoes.forEach(botao => {
   botao.addEventListener("click", function() {
-
-    // remove o active de todos os botões
     botoes.forEach(b => b.classList.remove("active"))
-
-    // adiciona o active no botão clicado
     this.classList.add("active")
-
-    // pega o valor do filtro do atributo data-filtro
-    const filtro = this.dataset.filtro
-
-    renderizarHistorico(filtro)
+    renderizarHistorico(this.dataset.filtro)
   })
 })
 
+// inicializa
 renderizarHistorico()

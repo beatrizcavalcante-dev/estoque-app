@@ -18,7 +18,8 @@
 
     <aside id="sidebar">
         <div class="logo">
-            <img src="../assets/stoque.png" alt="Stock Logo">
+            <div class="logo-text"><span>S</span>tock</div>
+            <div class="logo-sub">sistema de estoque</div>
         </div>
 
         <nav>
@@ -39,81 +40,98 @@
                 Histórico
             </a>
         </nav>
+        
+        <div class="sidebar-footer">
+            <p class="sidebar-contact">entre em contato</p>
+
+            <div class="sidebar-links">
+                <a href="https://www.linkedin.com/in/beatrizcavalcantee/" target="_blank" class="social-btn" title="LinkedIn">
+                    <i data-lucide="briefcase"></i>
+                </a>
+
+                <a href="https://api.whatsapp.com/send/?phone=5511966049189" target="_blank" class="social-btn" title="WhatsApp">
+                    <i data-lucide="message-circle"></i>
+                </a>
+            </div>
+        </div>
     </aside>
 
     <main id="main-content">
 
-    <header class="page-header">
-        <h1>Movimentações</h1>
-        <p>Registre entradas e saídas do estoque</p>
-    </header>
+        <header class="page-header">
+            <h1>Movimentações</h1>
+            <p>Registre entradas e saídas do estoque</p>
+        </header>
 
-    <!-- FORMULÁRIO -->
-    <section class="form-section">
-        <div class="section-header">
-            <h2>Nova Movimentação</h2>
-        </div>
-
-        <form id="form-movimentacao">
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="produto-select">Produto</label>
-                <select id="produto-select">
-                <option value="">Selecione o produto...</option>
-                </select>
+        <!-- FORMULÁRIO -->
+        <section class="form-section">
+            <div class="section-header">
+                <h2>Nova Movimentação</h2>
             </div>
 
-            <div class="form-group">
-                <label for="tipo">Tipo</label>
-                <select id="tipo">
-                <option value="entrada">Entrada</option>
-                <option value="saida">Saída</option>
-                </select>
+            <form id="form-movimentacao">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="produto-select">Produto</label>
+                    <select id="produto-select">
+                        <option value="">Selecione o produto...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo">
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="qtd-mov">Quantidade</label>
-                <input type="number" id="qtd-mov" placeholder="0" min="1">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="qtd-mov">Quantidade</label>
+                    <input type="number" id="qtd-mov" placeholder="0" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="observacao">Observação (opcional)</label>
+                    <input type="text" id="observacao" placeholder="Ex: Compra mensal">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="observacao">Observação (opcional)</label>
-                <input type="text" id="observacao" placeholder="Ex: Compra mensal">
+            <button type="submit" class="btn-primary">Registrar Movimentação</button>
+
+            </form>
+        </section>
+    
+        <section class="table-section" style="margin-top: 24px;">
+            <div class="section-header">
+                <h2>Movimentações Recentes</h2>
             </div>
-        </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Observação</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-movimentacoes"></tbody>
+            </table>
+        </section>
 
-        <button type="submit" class="btn-primary">Registrar Movimentação</button>
+        <footer class="footer">
+            <p>Dev. <span>Beatriz Cavalcante</span></p>
+        </footer>
 
-      </form>
-    </section>
+    </main>
 
-    <!-- HISTÓRICO RECENTE -->
-    <section class="table-section" style="margin-top: 24px;">
-        <div class="section-header">
-            <h2>Movimentações Recentes</h2>
-        </div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Tipo</th>
-                    <th>Quantidade</th>
-                    <th>Observação</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-movimentacoes"></tbody>
-        </table>
-    </section>
-
-  </main>
-
-  <script src="../js/app.js"></script>
-  <script src="../js/movimentacoes.js"></script>
-  <script>lucide.createIcons()</script>
+    <script src="../js/app.js"></script>
+    <script src="../js/movimentacoes.js"></script>
+    <script>lucide.createIcons()</script>
 
 </body>
 </html>

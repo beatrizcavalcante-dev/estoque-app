@@ -40,7 +40,7 @@ body {
   font-family: var(--font-main);
   font-size: 16px;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased; /* texto mais nítido em Mac/Chrome */
+  -webkit-font-smoothing: antialiased; 
   display: flex; 
   min-height: 100vh; 
 }
@@ -52,33 +52,52 @@ body {
   border-right: 1px solid var(--border);
   padding: 24px 16px;
   display: flex;
-  flex-direction: column; /* empilha logo + nav verticalmente */
-  gap: 32px; /* espaço entre colunas */
-  position: fixed; /* sidebar fica fixa ao rolar a página */
+  flex-direction: column; 
+  gap: 32px; 
+  position: fixed; 
   top: 0;
   left: 0;
 }
 
 #main-content {
-  margin-left: 220px; /* empurra o conteúdo para não ficar atrás da sidebar */
+  margin-left: 220px; 
   flex: 1;
   padding: 32px;
   background-color: var(--bg-primary);
 }
 
-/* ====LOGO==== */
+/* LOGO */
 
 .logo {
-  padding: 8px 4px;
+  padding: 12px 4px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
 }
 
-.logo img {
-  width: 170px;
-  display: block;
-  margin: 0 auto;  
+.logo-text {
+  font-size: 38px;
+  font-weight: 300;
+  color: #F0F0F0;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: Georgia, serif;
 }
 
-/* ====MENU DE NAVEGAÇÃO==== */
+.logo-text span {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+.logo-sub {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* MENU DE NAVEGAÇÃO */
 
 .nav-item {
   display: flex;
@@ -109,7 +128,56 @@ body {
   color: var(--text-primary);
 }
 
-/* ====CABEÇALHO DA PÁGINA==== */
+/* SIDEBAR FOOTER */
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-contact {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-family: Georgia, serif;
+}
+
+.sidebar-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.social-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+
+.social-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+/* CABEÇALHO DA PÁGINA */
 
 .page-header {
   margin-bottom: 32px;
@@ -127,11 +195,11 @@ body {
   color: var(--text-secondary);
 }
 
-/* ====CARDS DE MÉTRICAS==== */
+/* CARDS DE MÉTRICAS */
 
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas iguais */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 16px;
   margin-bottom: 32px;
 }
@@ -142,9 +210,17 @@ body {
   border-radius: var(--radius-lg);
   padding: 20px;
   display: flex;
-  flex-direction: column; /* label em cima, número embaixo */
+  flex-direction: column;
   gap: 10px;
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid var(--border); 
 }
+
+.metric-card.card-total   { border-top-color: #555555; }
+.metric-card.card-entrada { border-top-color: var(--success); }
+.metric-card.card-saida   { border-top-color: var(--danger); }
+.metric-card.card-alerta  { border-top-color: var(--warning); }
 
 .metric-label {
   font-size: 13px;
@@ -157,12 +233,12 @@ body {
   color: var(--text-primary);
 }
 
-/* cores semânticas no número */
+
 .metric-value.success { color: var(--success); }
 .metric-value.warning { color: var(--warning); }
 .metric-value.danger  { color: var(--danger);  }
 
-/* ====SEÇÃO COM TÍTULO==== */
+/* SEÇÃO COM TÍTULO */
 
 .section-header {
   margin-bottom: 16px;
@@ -174,7 +250,7 @@ body {
   color: var(--text-primary);
 }
 
-/* ====TABELA==== */
+/* TABELA */
 
 .table-section {
   background-color: var(--bg-surface);
@@ -185,7 +261,7 @@ body {
 
 .data-table {
   width: 100%;
-  border-collapse: collapse; /* remove espaço duplo entre bordas */
+  border-collapse: collapse; 
   font-size: 14px;
 }
 
@@ -204,14 +280,14 @@ body {
 }
 
 .data-table tr:last-child td {
-  border-bottom: none; /* remove borda da última linha */
+  border-bottom: none; 
 }
 
 .data-table tr:hover td {
-  background-color: var(--bg-elevated); /* destaque ao passar o mouse */
+  background-color: var(--bg-elevated); 
 }
 
-/* ====BADGES DE STATUS==== */
+/* BADGES DE STATUS */
 
 .badge {
   display: inline-block;
@@ -225,9 +301,8 @@ body {
 .badge.baixo   { background: #2e1f00; color: var(--warning); }
 .badge.critico { background: #2e0606; color: var(--danger);  }
 
-/* ================================
-   FORMULÁRIO
-================================ */
+/* FORMULÁRIO */
+
 .form-section {
   background-color: var(--bg-surface);
   border: 1px solid var(--border);
@@ -238,7 +313,7 @@ body {
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* dois campos por linha */
+  grid-template-columns: 1fr 1fr; 
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -270,7 +345,7 @@ body {
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: var(--accent-primary); /* borda vermelha ao focar */
+  border-color: var(--accent-primary); 
 }
 
 .form-group select option {
@@ -294,9 +369,8 @@ body {
   background-color: var(--accent-hover);
 }
 
-/* ================================
-   FILTROS
-================================ */
+/* FILTROS */
+
 .filtros-section {
   display: flex;
   gap: 8px;
@@ -325,9 +399,8 @@ body {
   color: var(--text-primary);
 }
 
-/* ================================
-   MENSAGEM VAZIO
-================================ */
+/* MENSAGEM VAZIO */
+
 #msg-vazio {
   text-align: center;
   padding: 32px;
@@ -335,9 +408,8 @@ body {
   font-size: 14px;
 }
 
-/* ================================
-   BUSCA
-================================ */
+/* BUSCA */
+
 .search-header {
   display: flex;
   align-items: center;
@@ -361,9 +433,8 @@ body {
   border-color: var(--accent-primary);
 }
 
-/* ================================
-   BOTÃO EXCLUIR
-================================ */
+/* BOTÃO EXCLUIR */
+
 .btn-excluir {
   background: transparent;
   border: 1px solid var(--danger);
@@ -397,11 +468,25 @@ body {
   color: var(--text-primary);
 }
 
-/* ================================
-   RESPONSIVIDADE MOBILE
-================================ */
+/* RODAPÉ */
 
-/* Botão para abrir/fechar sidebar no mobile */
+.footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.footer span {
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+/* RESPONSIVIDADE MOBILE */
+
 .menu-toggle {
   display: none;
   position: fixed;
@@ -478,3 +563,4 @@ body {
     min-width: 600px; /* força largura mínima para não comprimir */
   }
 }
+

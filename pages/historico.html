@@ -18,7 +18,8 @@
 
     <aside id="sidebar">
         <div class="logo">
-            <img src="../assets/stoque.png" alt="Stock Logo">
+            <div class="logo-text"><span>S</span>tock</div>
+            <div class="logo-sub">sistema de estoque</div>
         </div>
 
         <nav>
@@ -39,6 +40,19 @@
                 Histórico
             </a>
         </nav>
+        <div class="sidebar-footer">
+            <p class="sidebar-contact">entre em contato</p>
+
+            <div class="sidebar-links">
+                <a href="https://www.linkedin.com/in/beatrizcavalcantee/" target="_blank" class="social-btn" title="LinkedIn">
+                    <i data-lucide="briefcase"></i>
+                </a>
+
+                <a href="https://api.whatsapp.com/send/?phone=5511966049189" target="_blank" class="social-btn" title="WhatsApp">
+                    <i data-lucide="message-circle"></i>
+                </a>
+            </div>
+        </div>
     </aside>
 
     <main id="main-content">
@@ -47,15 +61,13 @@
             <h1>Histórico</h1>
             <p>Todas as movimentações registradas</p>
         </header>
-
-    <!-- FILTROS -->
+        
         <section class="filtros-section">
             <button class="btn-filtro active" data-filtro="todos">Todos</button>
             <button class="btn-filtro" data-filtro="entrada">Entradas</button>
             <button class="btn-filtro" data-filtro="saida">Saídas</button>
         </section>
-
-    <!-- TABELA -->
+        
         <section class="table-section" style="margin-top: 16px;">
             <table class="data-table">
                 <thead>
@@ -67,21 +79,23 @@
                         <th>Data</th>
                     </tr>
                 </thead>
-            <tbody id="tabela-historico"></tbody>
+                <tbody id="tabela-historico"></tbody>
             </table>
-
-      <!-- mensagem quando não há registros -->
+      
             <div id="msg-vazio" style="display:none;">
                 <p>Nenhuma movimentação encontrada.</p>
             </div>
-
         </section>
+
+        <footer class="footer">
+            <p>Dev. <span>Beatriz Cavalcante</span></p>
+        </footer>
 
     </main>
 
-  <script src="../js/app.js"></script>
-  <script src="../js/historico.js"></script>
-  <script>lucide.createIcons()</script>
+    <script src="../js/app.js"></script>
+    <script src="../js/historico.js"></script>
+    <script>lucide.createIcons()</script>
 
 </body>
 </html>

@@ -1,24 +1,40 @@
-// PREENCHE o select com os produtos
-function preencherSelectProdutos() {
+// ================================
+// PREENCHE SELECT COM PRODUTOS DA API
+// ================================
+async function preencherSelectProdutos() {
+  const resposta = await fetch(`${API}/produtos`)
+  const produtos  = await resposta.json()
+
   const select = document.getElementById("produto-select")
   select.innerHTML = '<option value="">Selecione o produto...</option>'
 
-  produtos.forEach((produto, index) => {
-    // index é a posição do produto no array
-    // usamos como identificador único
-    select.innerHTML += `<option value="${index}">${produto.nome}</option>`
+  produtos.forEach(produto => {
+    select.innerHTML += `<option value="${produto.id}">${produto.nome}</option>`
   })
 }
 
-// RENDERIZA 
-function renderizarMovimentacoes() {
+// ================================
+// RENDERIZA TABELA DE MOVIMENTAÇÕES
+// ================================
+async function renderizarMovimentacoes() {
+  const resposta      = await fetch(`${API}/movimentacoes`)
+  const movimentacoes = await resposta.json()
+
   const tbody = document.getElementById("tabela-movimentacoes")
   tbody.innerHTML = ""
 
-  // exibe do mais recente para o mais antigo
-  const lista = [...movimentacoes].reverse()
+  if (movimentacoes.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align:center; color: var(--text-muted); padding: 24px;">
+          Nenhuma movimentação registrada.
+        </td>
+      </tr>
+    `
+    return
+  }
 
-  lista.forEach(mov => {
+  movimentacoes.forEach(mov => {
     const tipo = mov.tipo === "entrada"
       ? '<span class="badge ok">Entrada</span>'
       : '<span class="badge critico">Saída</span>'
@@ -35,57 +51,56 @@ function renderizarMovimentacoes() {
   })
 }
 
-// REGISTRA nova movimentação
+// ================================
+// REGISTRAR MOVIMENTAÇÃO
+// ================================
 const form = document.getElementById("form-movimentacao")
 
-form.addEventListener("submit", function(evento) {
+form.addEventListener("submit", async function(evento) {
   evento.preventDefault()
 
-  const indexProduto = document.getElementById("produto-select").value
-  const tipo         = document.getElementById("tipo").value
-  const quantidade   = Number(document.getElementById("qtd-mov").value)
-  const observacao   = document.getElementById("observacao").value.trim()
+  const produto_id = document.getElementById("produto-select").value
+  const tipo       = document.getElementById("tipo").value
+  const quantidade = Number(document.getElementById("qtd-mov").value)
+  const observacao = document.getElementById("observacao").value.trim()
 
-  // validações
-  if (indexProduto === "") {
+  if (!produto_id) {
     alert("Selecione um produto.")
     return
   }
+
   if (!quantidade || quantidade <= 0) {
     alert("Informe uma quantidade válida.")
     return
   }
 
-  const produto = produtos[indexProduto]
+  // busca o produto para verificar estoque
+  const resposta = await fetch(`${API}/produtos/${produto_id}`)
+  const produto  = await resposta.json()
 
-  // impede saída maior que o estoque disponível
   if (tipo === "saida" && quantidade > produto.quantidade) {
     alert(`Estoque insuficiente. Disponível: ${produto.quantidade}`)
     return
   }
 
-  // atualiza a quantidade do produto
-  if (tipo === "entrada") {
-    produto.quantidade += quantidade
-  } else {
-    produto.quantidade -= quantidade
-  }
+  await fetch(`${API}/movimentacoes`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      produto_id,
+      produto: produto.nome,
+      tipo,
+      quantidade,
+      observacao,
+      data: new Date().toLocaleDateString("pt-BR")
+    })
+  })
 
-  // cria o registro da movimentação
-  const novaMovimentacao = {
-    produto: produto.nome,
-    tipo,
-    quantidade,
-    observacao,
-    data: new Date().toLocaleDateString("pt-BR") // data de hoje
-  }
-
-  movimentacoes.push(novaMovimentacao)
-  salvarDados()
   form.reset()
   preencherSelectProdutos()
   renderizarMovimentacoes()
 })
 
+// inicializa
 preencherSelectProdutos()
 renderizarMovimentacoes()
