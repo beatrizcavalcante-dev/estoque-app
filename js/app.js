@@ -1,7 +1,7 @@
 // ================================
 // URL BASE DA API
 // ================================
-const API = "http://localhost:3000"
+const API = "https://estoque-app-6ab7.onrender.com"
 
 // ================================
 // BUSCAR PRODUTOS DA API
