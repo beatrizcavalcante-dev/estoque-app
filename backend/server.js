@@ -1,6 +1,6 @@
 const express = require("express")
 const cors    = require("cors")
-const db      = require("./database")
+const pool    = require("./database")
 
 const app  = express()
 const PORT = process.env.PORT || 3000
@@ -8,87 +8,92 @@ const PORT = process.env.PORT || 3000
 app.use(cors())
 app.use(express.json())
 
-// ROTAS DE PRODUTOS // 
-
-app.get("/produtos", (req, res) => {
+// ================================
+// ROTAS DE PRODUTOS
+// ================================
+app.get("/produtos", async (req, res) => {
   try {
-    const rows = db.prepare("SELECT * FROM produtos").all()
-    res.json(rows)
+    const result = await pool.query("SELECT * FROM produtos ORDER BY id")
+    res.json(result.rows)
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-app.get("/produtos/:id", (req, res) => {
+app.get("/produtos/:id", async (req, res) => {
   try {
-    const row = db.prepare("SELECT * FROM produtos WHERE id=?").get(req.params.id)
-    res.json(row)
+    const result = await pool.query("SELECT * FROM produtos WHERE id=$1", [req.params.id])
+    res.json(result.rows[0])
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-app.post("/produtos", (req, res) => {
+app.post("/produtos", async (req, res) => {
   const { nome, categoria, quantidade, estoque_minimo } = req.body
   if (!nome || !categoria) return res.status(400).json({ erro: "Nome e categoria são obrigatórios." })
 
   try {
-    const result = db.prepare(
-      "INSERT INTO produtos (nome, categoria, quantidade, estoque_minimo) VALUES (?, ?, ?, ?)"
-    ).run(nome, categoria, quantidade, estoque_minimo)
-    res.json({ id: result.lastInsertRowid, nome, categoria, quantidade, estoque_minimo })
+    const result = await pool.query(
+      "INSERT INTO produtos (nome, categoria, quantidade, estoque_minimo) VALUES ($1, $2, $3, $4) RETURNING *",
+      [nome, categoria, quantidade, estoque_minimo]
+    )
+    res.json(result.rows[0])
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-app.put("/produtos/:id", (req, res) => {
+app.put("/produtos/:id", async (req, res) => {
   const { nome, categoria, quantidade, estoque_minimo } = req.body
   try {
-    db.prepare(
-      "UPDATE produtos SET nome=?, categoria=?, quantidade=?, estoque_minimo=? WHERE id=?"
-    ).run(nome, categoria, quantidade, estoque_minimo, req.params.id)
+    await pool.query(
+      "UPDATE produtos SET nome=$1, categoria=$2, quantidade=$3, estoque_minimo=$4 WHERE id=$5",
+      [nome, categoria, quantidade, estoque_minimo, req.params.id]
+    )
     res.json({ mensagem: "Produto atualizado." })
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-app.delete("/produtos/:id", (req, res) => {
+app.delete("/produtos/:id", async (req, res) => {
   try {
-    db.prepare("DELETE FROM produtos WHERE id=?").run(req.params.id)
+    await pool.query("DELETE FROM produtos WHERE id=$1", [req.params.id])
     res.json({ mensagem: "Produto excluído." })
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-// ROTAS DE MOVIMENTAÇÕES //
-
-app.get("/movimentacoes", (req, res) => {
+// ================================
+// ROTAS DE MOVIMENTAÇÕES
+// ================================
+app.get("/movimentacoes", async (req, res) => {
   try {
-    const rows = db.prepare("SELECT * FROM movimentacoes ORDER BY id DESC").all()
-    res.json(rows)
+    const result = await pool.query("SELECT * FROM movimentacoes ORDER BY id DESC")
+    res.json(result.rows)
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
 })
 
-app.post("/movimentacoes", (req, res) => {
+app.post("/movimentacoes", async (req, res) => {
   const { produto_id, produto, tipo, quantidade, observacao, data } = req.body
 
   try {
     const sql = tipo === "entrada"
-      ? "UPDATE produtos SET quantidade = quantidade + ? WHERE id = ?"
-      : "UPDATE produtos SET quantidade = quantidade - ? WHERE id = ?"
+      ? "UPDATE produtos SET quantidade = quantidade + $1 WHERE id = $2"
+      : "UPDATE produtos SET quantidade = quantidade - $1 WHERE id = $2"
 
-    db.prepare(sql).run(quantidade, produto_id)
+    await pool.query(sql, [quantidade, produto_id])
 
-    const result = db.prepare(
-      "INSERT INTO movimentacoes (produto_id, produto, tipo, quantidade, observacao, data) VALUES (?, ?, ?, ?, ?, ?)"
-    ).run(produto_id, produto, tipo, quantidade, observacao, data)
+    const result = await pool.query(
+      "INSERT INTO movimentacoes (produto_id, produto, tipo, quantidade, observacao, data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [produto_id, produto, tipo, quantidade, observacao, data]
+    )
 
-    res.json({ mensagem: "Movimentação registrada.", id: result.lastInsertRowid })
+    res.json({ mensagem: "Movimentação registrada.", id: result.rows[0].id })
   } catch (err) {
     res.status(500).json({ erro: err.message })
   }
