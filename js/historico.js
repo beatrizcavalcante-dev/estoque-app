@@ -1,6 +1,3 @@
-// ================================
-// RENDERIZA HISTÓRICO FILTRADO
-// ================================
 async function renderizarHistorico(filtro = "todos") {
   const resposta      = await fetch(`${API}/movimentacoes`)
   const movimentacoes = await resposta.json()
@@ -38,9 +35,6 @@ async function renderizarHistorico(filtro = "todos") {
   })
 }
 
-// ================================
-// BOTÕES DE FILTRO
-// ================================
 const botoes = document.querySelectorAll(".btn-filtro")
 
 botoes.forEach(botao => {
@@ -51,5 +45,4 @@ botoes.forEach(botao => {
   })
 })
 
-// inicializa
 renderizarHistorico()

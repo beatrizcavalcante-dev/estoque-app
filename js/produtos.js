@@ -1,20 +1,11 @@
-// ================================
-// VARIÁVEIS GLOBAIS
-// ================================
 let produtos = []
 
-// ================================
-// BUSCAR PRODUTOS DA API
-// ================================
 async function carregarProdutos() {
   const resposta = await fetch(`${API}/produtos`)
   produtos = await resposta.json()
   renderizarTabela()
 }
 
-// ================================
-// RENDERIZA TABELA
-// ================================
 function renderizarTabela(filtro = "") {
   const tbody = document.getElementById("tabela-produtos")
   tbody.innerHTML = ""
@@ -62,16 +53,10 @@ function renderizarTabela(filtro = "") {
   })
 }
 
-// ================================
-// BUSCA EM TEMPO REAL
-// ================================
 document.getElementById("busca").addEventListener("input", function() {
   renderizarTabela(this.value)
 })
 
-// ================================
-// CLIQUES NA TABELA
-// ================================
 document.addEventListener("click", async function(evento) {
 
   // EXCLUIR
@@ -102,9 +87,6 @@ document.addEventListener("click", async function(evento) {
   }
 })
 
-// ================================
-// SUBMIT — cadastro ou edição
-// ================================
 const form      = document.getElementById("form-produto")
 const btnSubmit = document.getElementById("btn-submit")
 
@@ -148,5 +130,4 @@ form.addEventListener("submit", async function(evento) {
   carregarProdutos()
 })
 
-// inicializa
 carregarProdutos()

@@ -1,6 +1,3 @@
-// ================================
-// PREENCHE SELECT COM PRODUTOS DA API
-// ================================
 async function preencherSelectProdutos() {
   const resposta = await fetch(`${API}/produtos`)
   const produtos  = await resposta.json()
@@ -13,9 +10,6 @@ async function preencherSelectProdutos() {
   })
 }
 
-// ================================
-// RENDERIZA TABELA DE MOVIMENTAÇÕES
-// ================================
 async function renderizarMovimentacoes() {
   const resposta      = await fetch(`${API}/movimentacoes`)
   const movimentacoes = await resposta.json()
@@ -51,9 +45,6 @@ async function renderizarMovimentacoes() {
   })
 }
 
-// ================================
-// REGISTRAR MOVIMENTAÇÃO
-// ================================
 const form = document.getElementById("form-movimentacao")
 
 form.addEventListener("submit", async function(evento) {
@@ -101,6 +92,5 @@ form.addEventListener("submit", async function(evento) {
   renderizarMovimentacoes()
 })
 
-// inicializa
 preencherSelectProdutos()
 renderizarMovimentacoes()

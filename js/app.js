@@ -1,29 +1,17 @@
-// ================================
-// URL BASE DA API
-// ================================
 const API = "https://estoque-app-6ab7.onrender.com"
 
-// ================================
-// BUSCAR PRODUTOS DA API
-// ================================
 async function carregarProdutos() {
   const resposta = await fetch(`${API}/produtos`)
   const produtos = await resposta.json()
   return produtos
 }
 
-// ================================
-// BUSCAR MOVIMENTAÇÕES DA API
-// ================================
 async function carregarMovimentacoes() {
   const resposta = await fetch(`${API}/movimentacoes`)
   const movimentacoes = await resposta.json()
   return movimentacoes
 }
 
-// ================================
-// MÉTRICAS DO DASHBOARD
-// ================================
 async function atualizarMetrics() {
   const produtos       = await carregarProdutos()
   const movimentacoes  = await carregarMovimentacoes()
@@ -47,9 +35,6 @@ async function atualizarMetrics() {
   document.getElementById("total-alertas").textContent  = totalAlertas
 }
 
-// ================================
-// TABELA DO DASHBOARD
-// ================================
 async function renderizarTabela() {
   const produtos = await carregarProdutos()
   const tbody    = document.getElementById("tabela-produtos")
@@ -79,9 +64,7 @@ async function renderizarTabela() {
   })
 }
 
-// ================================
-// MENU MOBILE
-// ================================
+// MENU MOBILE //
 const menuToggle = document.getElementById("menu-toggle")
 const sidebar    = document.getElementById("sidebar")
 
@@ -99,8 +82,5 @@ if (menuToggle) {
   })
 }
 
-// ================================
-// INICIALIZA O DASHBOARD
-// ================================
 if (document.getElementById("total-produtos")) atualizarMetrics()
 if (document.getElementById("tabela-produtos")) renderizarTabela()

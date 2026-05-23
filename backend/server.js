@@ -8,9 +8,6 @@ const PORT = process.env.PORT || 3000
 app.use(cors())
 app.use(express.json())
 
-// ================================
-// ROTAS DE PRODUTOS
-// ================================
 app.get("/produtos", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM produtos ORDER BY id")
@@ -66,9 +63,6 @@ app.delete("/produtos/:id", async (req, res) => {
   }
 })
 
-// ================================
-// ROTAS DE MOVIMENTAÇÕES
-// ================================
 app.get("/movimentacoes", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM movimentacoes ORDER BY id DESC")
