@@ -2,29 +2,14 @@ const express = require("express")
 const cors = require("cors")
 const db = require("./database")
 
+const produtosRoutes = require("./routes/produtosRoutes");
+
 const app  = express()
 const PORT = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json())
-
-app.get("/produtos", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM produtos ORDER BY id")
-    res.json(result.rows)
-  } catch (err) {
-    res.status(500).json({ erro: err.message })
-  }
-})
-
-app.get("/produtos/:id", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM produtos WHERE id=$1", [req.params.id])
-    res.json(result.rows[0])
-  } catch (err) {
-    res.status(500).json({ erro: err.message })
-  }
-})
+app.use("/produtos", produtosRoutes);
 
 app.post("/produtos", async (req, res) => {
   const { nome, categoria, quantidade, estoque_minimo } = req.body
