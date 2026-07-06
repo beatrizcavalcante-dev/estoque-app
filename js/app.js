@@ -1,4 +1,4 @@
-const API = "https://estoque-app-6ab7.onrender.com"
+const API = "http://127.0.0.1:3000"
 
 async function carregarProdutos() {
   const resposta = await fetch(`${API}/produtos`)

@@ -1,6 +1,6 @@
 const express = require("express")
-const cors    = require("cors")
-const pool    = require("./database")
+const cors = require("cors")
+const db = require("./database")
 
 const app  = express()
 const PORT = process.env.PORT || 3000
@@ -10,7 +10,7 @@ app.use(express.json())
 
 app.get("/produtos", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM produtos ORDER BY id")
+    const result = await db.query("SELECT * FROM produtos ORDER BY id")
     res.json(result.rows)
   } catch (err) {
     res.status(500).json({ erro: err.message })
@@ -19,7 +19,7 @@ app.get("/produtos", async (req, res) => {
 
 app.get("/produtos/:id", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM produtos WHERE id=$1", [req.params.id])
+    const result = await db.query("SELECT * FROM produtos WHERE id=$1", [req.params.id])
     res.json(result.rows[0])
   } catch (err) {
     res.status(500).json({ erro: err.message })
@@ -31,7 +31,7 @@ app.post("/produtos", async (req, res) => {
   if (!nome || !categoria) return res.status(400).json({ erro: "Nome e categoria são obrigatórios." })
 
   try {
-    const result = await pool.query(
+    const result = await db.query(
       "INSERT INTO produtos (nome, categoria, quantidade, estoque_minimo) VALUES ($1, $2, $3, $4) RETURNING *",
       [nome, categoria, quantidade, estoque_minimo]
     )
@@ -44,7 +44,7 @@ app.post("/produtos", async (req, res) => {
 app.put("/produtos/:id", async (req, res) => {
   const { nome, categoria, quantidade, estoque_minimo } = req.body
   try {
-    await pool.query(
+    await db.query(
       "UPDATE produtos SET nome=$1, categoria=$2, quantidade=$3, estoque_minimo=$4 WHERE id=$5",
       [nome, categoria, quantidade, estoque_minimo, req.params.id]
     )
@@ -56,7 +56,7 @@ app.put("/produtos/:id", async (req, res) => {
 
 app.delete("/produtos/:id", async (req, res) => {
   try {
-    await pool.query("DELETE FROM produtos WHERE id=$1", [req.params.id])
+    await db.query("DELETE FROM produtos WHERE id=$1", [req.params.id])
     res.json({ mensagem: "Produto excluído." })
   } catch (err) {
     res.status(500).json({ erro: err.message })
@@ -65,7 +65,7 @@ app.delete("/produtos/:id", async (req, res) => {
 
 app.get("/movimentacoes", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM movimentacoes ORDER BY id DESC")
+    const result = await db.query("SELECT * FROM movimentacoes ORDER BY id DESC")
     res.json(result.rows)
   } catch (err) {
     res.status(500).json({ erro: err.message })
@@ -80,9 +80,9 @@ app.post("/movimentacoes", async (req, res) => {
       ? "UPDATE produtos SET quantidade = quantidade + $1 WHERE id = $2"
       : "UPDATE produtos SET quantidade = quantidade - $1 WHERE id = $2"
 
-    await pool.query(sql, [quantidade, produto_id])
+    await db.query(sql, [quantidade, produto_id])
 
-    const result = await pool.query(
+    const result = await db.query(
       "INSERT INTO movimentacoes (produto_id, produto, tipo, quantidade, observacao, data) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [produto_id, produto, tipo, quantidade, observacao, data]
     )
